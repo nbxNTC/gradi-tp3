@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  front:
+    build: .
+    container_name: gradi-tp3-front
+    ports:
+      - 3000:3000
+    volumes: 
+      - ./:/code
+    working_dir: /code
