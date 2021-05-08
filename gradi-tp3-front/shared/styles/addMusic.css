@@ -1,0 +1,37 @@
+.add-music {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-music > form {
+  width: 30rem;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.add-music > form > h1 {
+  margin-bottom: 1rem;
+}
+
+.add-music > form > span {
+  width: fit-content;
+  margin: .6rem auto;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+}
+
+.add-music > form > span > p {
+  margin-right: 1rem;
+
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.add-music > form > span > svg {
+  font-size: 1.2rem;
+}

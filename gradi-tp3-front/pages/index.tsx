@@ -1,83 +1,52 @@
 import { useState } from 'react'
-import axios from 'axios'
+import { useRouter } from 'next/router'
 
-interface FormState {
-  values: {
-    name: string,
-    email: string,
-    password: string,
-    phone: string
-  }
-}
+import { FiMusic } from 'react-icons/fi'
+
+import Loading from 'components/loading'
 
 const Home = () => {
 
-  const initialFormState: FormState = {
-    values: {
-      name: '',
-      email: '',
-      password: '',
-      phone: ''
-    }
-  }
+  const router = useRouter()
 
-  const [formState, setFormState] = useState<FormState>(initialFormState)
+  const [data, setData] = useState()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target
-    setFormState(formState => ({
-      ...formState,
-      values: {
-        ...formState.values,
-        [name]: value
-      }
-    }))
-  }
+  const [filter, setFilter] = useState<string>('')
+
+  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { name, email, password, phone } = formState.values
+    alert(filter)
 
-    const url = `${process.env.NEXT_PUBLIC_API_URL}/user`
-    const data = { name, email, password, phone }
-
-    try {
-      const apiRes = await axios.post(url, data)
-      console.log(apiRes.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
-  const handleLoginGoogle = () => {
-    const googleProvider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithPopup(googleProvider).then(async res => {
-      const { displayName, email } = res.user
-
-      const url = `${process.env.NEXT_PUBLIC_API_URL}/user`
-      const data = { name: displayName, email }
-
-      try {
-        const apiRes = await axios.post(url, data)
-        console.log(apiRes.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }).catch(error => {
-      console.log(error)
-    })
+    setLoading(true)
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input type='text' name='email' placeholder='E-mail' value={formState.values.email} onChange={handleChange}/>
-      <input type='text' name='password' placeholder='Senha' value={formState.values.password} onChange={handleChange}/>
+    <div className='container home'>
+      <Loading loading={loading}/>
 
-      <button type='submit'>Entrar</button>
-      <button type='button' onClick={() => setFormState(initialFormState)}>Limpar</button>
-      <button type='button' onClick={handleLoginGoogle}>Entrar com Google</button>
-    </form>
+      {Boolean(!loading && !data) && (
+        <form onSubmit={handleSubmit}>
+          <h1>Encontre sua música favorita</h1>
+
+          <input
+            type='text'
+            placeholder='Pesquise pelo nome ou letra'
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+          />
+
+          <button style={{ margin: '1rem 0' }} type='submit'>Pesquisar</button>
+
+          <span onClick={() => router.push('musicas/enviar')}>
+            <p>Enviar música</p>
+            <FiMusic />
+          </span>
+        </form>
+      )}
+    </div>
   )
 }
 
