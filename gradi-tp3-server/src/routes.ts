@@ -1,9 +1,13 @@
 import { Router }  from 'express';
 import SongController from './controllers/SongController';
 
-const routes = Router();
+import multer from 'multer';
+import UploadConfig from './upload';
 
-routes.post('/songs', SongController.create);
+const routes = Router();
+const upload = multer(UploadConfig);
+
+routes.post('/songs', upload.array('song'), SongController.create);
 
 routes.get('/songs', SongController.index);
 

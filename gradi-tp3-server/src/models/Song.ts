@@ -3,6 +3,6 @@ export default class Song {
     title!: string;
     length!: number;
     categories!: [];
-    file!: string;
+    file!: any;
     lyrics!: string;
 }
