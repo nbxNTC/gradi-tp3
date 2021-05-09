@@ -4,7 +4,7 @@ import axios from'axios'
 
 import Loading from 'components/loading'
 
-const API_URL = 'http://localhost:3001/'
+const API_URL = 'http://localhost:3333/'
 
 interface FormState {
   values: {
@@ -45,7 +45,7 @@ const AddMusic = () => {
 
   const handleUploadFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { files } = e.target
-    if (!files || !files.length || files[0].type !== 'audio/mpeg') return
+    if (!files || !files.length || files[0].type !== 'audio/wav') return
 
     setFile(files[0])
   }
@@ -58,20 +58,24 @@ const AddMusic = () => {
 
     const { title, artist, categories, length } = formState.values
 
-    const body = {
-      title,
-      artist,
-      length,
-      categories: categories.split(';'),
-      file
-    }
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('artist', artist)
+    formData.append('length', String(length))
+    formData.append('categories', categories)
+    formData.append('song', file)
 
     try {
       setLoading(true)
       const res = await axios.post(
-        'enviar',
-        body,
-        { baseURL: API_URL }
+        'songs',
+        formData,
+        {
+          baseURL: API_URL,
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       )
       console.log(res)
 
@@ -143,7 +147,7 @@ const AddMusic = () => {
               <input
                 type='file'
                 style={{ display: 'none' }}
-                accept='audio/mpeg'
+                accept='audio/wav'
                 id='uploadFile'
                 onChange={handleUploadFile} 
               />
