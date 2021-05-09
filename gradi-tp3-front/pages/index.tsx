@@ -28,7 +28,7 @@ const Home = () => {
     try {
       setLoading(true)
       const res = await axios.get(
-        'endpoint',
+        'songs',
         {
           baseURL: API_URL,
           params: { filter }
@@ -37,25 +37,25 @@ const Home = () => {
       console.log(res)
 
       setTimeout(() => {
-        // setData(res.data)
-        setData([
-          {
-            title: 'USO',
-            artist: 'SID',
-            length: 120,
-            categories: ['Pop Rock, Japan Rock'],
-            file: 'musics/uso.mp3',
-            lyrics: 'あの日見た空 茜色の空を ねぇ君は覚えていますか 約束契り初夏の風が包む 二人寄り添った 無理な笑顔の裏 伸びた影を匿う だから気づかぬように 再生を選ぶテーブルの上の 震えない知らせ 待ち続けて 空白の夜も 来るはずのない朝も'
-          },
-          {
-            title: 'The Day',
-            artist: 'Boku no Hero',
-            length: 240,
-            categories: ['Pop Rock, Japan Rock, Anime Music'],
-            file: 'musics/the_day.mp3',
-            lyrics: 'Shizukesa ga jimikomu yō de Iki o tometa gozen goji Hiyō wo kaidan de tsume o kamu asu wa docchida The day has come'
-          },
-        ])
+        setData(res.data)
+        // setData([
+        //   {
+        //     title: 'USO',
+        //     artist: 'SID',
+        //     length: 120,
+        //     categories: 'Pop Rock;Japan Rock',
+        //     song: 'musics/uso.mp3',
+        //     lyrics: 'あの日見た空 茜色の空を ねぇ君は覚えていますか 約束契り初夏の風が包む 二人寄り添った 無理な笑顔の裏 伸びた影を匿う だから気づかぬように 再生を選ぶテーブルの上の 震えない知らせ 待ち続けて 空白の夜も 来るはずのない朝も'
+        //   },
+        //   {
+        //     title: 'The Day',
+        //     artist: 'Boku no Hero',
+        //     length: 240,
+        //     categories: 'Pop Rock;Japan Rock;Anime Music',
+        //     song: 'musics/the_day.mp3',
+        //     lyrics: 'Shizukesa ga jimikomu yō de Iki o tometa gozen goji Hiyō wo kaidan de tsume o kamu asu wa docchida The day has come'
+        //   },
+        // ])
         setLoading(false)
       }, 2000)
     } catch (error) {
@@ -74,7 +74,7 @@ const Home = () => {
 
           <input
             type='text'
-            placeholder='Pesquise pelo nome ou letra'
+            placeholder='Pesquise pelo título, artista, categoria ou letra'
             value={filter}
             onChange={e => setFilter(e.target.value)}
           />

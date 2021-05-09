@@ -29,11 +29,12 @@ const useStyles = makeStyles(() => ({
 }))
 
 export interface Music {
+  _id: string
   title: string
   artist: string
   length: number
-  categories: string[]
-  file: string
+  categories: string
+  song: string
   lyrics: string
 }
 
@@ -47,11 +48,12 @@ const Musics = (props: Props) => {
 
   const classes = useStyles()
 
-  const formatCategories = (categories: string[]) => {
+  const formatCategories = (categories: string) => {
     let newValue = ''
 
-    categories.forEach((item, index) => {
-      if (index !== categories.length - 1) newValue += `${item}, `
+    const splitedCategories = String(categories).split(';')
+    splitedCategories.forEach((item, index) => {
+      if (index !== splitedCategories.length - 1) newValue += `${item}, `
       else newValue += item
     })
 
@@ -86,7 +88,7 @@ const Musics = (props: Props) => {
             <audio
               style={{ width: '100%' }}
               controls
-              src={item.file}
+              src={item.song}
             />
           </article>
         </div>
