@@ -47,7 +47,6 @@ export default {
                 config: config,
               };
             
-              // Detects speech in the audio file
               const [res] = await speecher.recognize(req);
               const transcription = res.results
                 .map((result: any) => result.alternatives[0].transcript)
@@ -58,7 +57,7 @@ export default {
                 artist: request.body.artist,
                 length: request.body.length,
                 categories: request.body.categories,
-                file: songName,
+                song: songName,
                 lyrics: transcription
             }
 
@@ -83,10 +82,15 @@ export default {
 
             const collection = await client.db("gradi").collection("songs");
 
-            const query = await collection.findOne({name: 'teste'});
+            const filter = request.query.filter;
 
-            console.log(query);
-            return response.status(200).json(query);
+            var query = { '$or': [{title:{$regex: filter}}, {artist:{$regex:filter}}, {categories:{$regex:filter}},{lyrics:{$regex:filter}}]}
+
+            const result = await collection.find(query).toArray(function(err: any, result:any) {
+                if (err) throw err;
+                return response.status(200).json(result);
+              });;
+
 
         } catch (error) {
             return response.status(400).json(error);
