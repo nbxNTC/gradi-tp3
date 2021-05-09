@@ -33,9 +33,6 @@ export default {
             const songDir = song[0].path;
             const songName = 'C:/Users/Candin/Documents/UFV/2021-1/CCF 424/tp3/gradi-tp3/gradi-tp3-server/src/uploads/' + songDir;
 
-           // const gcsUri = 'C:/Users/Candin/Documents/UFV/2021-1/CCF 424/tp3/gradi-tp3/gradi-tp3-server/src/controllers/morena.wav';
-           // console.log(songName)
-
             const audio = {
                 content: fs.readFileSync(songName).toString('base64')
               };
@@ -58,7 +55,7 @@ export default {
 
             const payload = {
                 title: request.body.title,
-                description: request.body.description,
+                artist: request.body.artist,
                 length: request.body.length,
                 categories: request.body.categories,
                 file: songName,

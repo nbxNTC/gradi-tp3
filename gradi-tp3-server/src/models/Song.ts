@@ -1,8 +1,8 @@
 export default class Song {
-    id!: number;
     title!: string;
-    length!: number;
+    artist!: string;
     categories!: [];
+    length!: number;
     file!: any;
     lyrics!: string;
 }
