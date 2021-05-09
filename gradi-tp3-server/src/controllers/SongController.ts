@@ -31,7 +31,7 @@ export default {
 
         
             const songDir = song[0].path;
-            const songName = 'C:/Users/Candin/Documents/UFV/2021-1/CCF 424/tp3/gradi-tp3/gradi-tp3-server/src/uploads/' + songDir;
+            const songName = 'C:/Users/Candin/Documents/UFV/2021-1/CCF 424/tp3/gradi-tp3/gradi-tp3-front/public/musics/' + songDir;
 
             const audio = {
                 content: fs.readFileSync(songName).toString('base64')
@@ -57,7 +57,7 @@ export default {
                 artist: request.body.artist,
                 length: request.body.length,
                 categories: request.body.categories,
-                song: songName,
+                song: 'musics/' + songDir,
                 lyrics: transcription
             }
 
