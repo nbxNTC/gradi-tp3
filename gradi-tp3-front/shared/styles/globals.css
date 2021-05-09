@@ -10,7 +10,7 @@ html, body {
   margin: 0;
 }
 
-input, textarea {
+input {
   width: 100%;
   padding: 1rem;
   margin: .6rem 0;
@@ -21,7 +21,7 @@ input, textarea {
 
 button {
   width: 100%;
-  padding: 1rem;
+  padding: .8rem;
 
   font-size: 1rem;
   font-weight: bold;

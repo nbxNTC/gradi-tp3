@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
-
-import { FiFilePlus } from 'react-icons/fi'
+import axios from'axios'
 
 import Loading from 'components/loading'
+
+const API_URL = 'http://localhost:3001/'
 
 interface FormState {
   values: {
     title: string,
-    description: string,
+    artist: string,
     categories: string,
     length: number
   }
@@ -21,7 +22,7 @@ const AddMusic = () => {
   const initialFormState: FormState = {
     values: {
       title: '',
-      description: '',
+      artist: '',
       categories: '',
       length: undefined
     }
@@ -50,31 +51,59 @@ const AddMusic = () => {
   }
 
   const [loading, setLoading] = useState(false)
+  const [resStatus, setResStatus] = useState<'success' | 'error'>()
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const { title, description, categories, length } = formState.values
+    const { title, artist, categories, length } = formState.values
 
     const body = {
       title,
-      description,
+      artist,
       length,
       categories: categories.split(';'),
       file
     }
 
-    setLoading(true)
-    console.log(body)
+    try {
+      setLoading(true)
+      const res = await axios.post(
+        'enviar',
+        body,
+        { baseURL: API_URL }
+      )
+      console.log(res)
+
+      setTimeout(() => {
+        setResStatus('success')
+        setLoading(false)
+      }, 2000)
+    } catch (error) {
+      console.log(error)
+      setResStatus('error')
+      setLoading(false)
+    }
   }
 
   return (
     <div className='container add-music'>
-      <Loading loading={loading}/>
+      <Loading loading={loading} text='Enviando música'/>
+      {resStatus && (
+        <div>
+          <h2 style={{ marginBottom: '2rem' }}>
+            {resStatus === 'success' && 'Música enviada com sucesso!'}
+            {resStatus === 'error' && 'Ocorreu um problema ao enviar música!'}
+          </h2>
+          <button onClick={() => router.back()}>
+            Voltar para tela inicial
+          </button>
+        </div>
+      )}
 
-      {Boolean(!loading) && (
+      {Boolean(!loading && !resStatus) && (
         <form onSubmit={handleSubmit}>
-          <h1>Envie sua música para nós</h1>
+          <h2>Envie sua música para nós</h2>
 
           <input
             type='text'
@@ -84,12 +113,11 @@ const AddMusic = () => {
             onChange={handleChange}
           />
 
-          <textarea
-            style={{ resize: 'none' }}
-            placeholder='Descrição'
-            name='description'
-            rows={4}
-            value={formState.values.description}
+          <input
+            type='text'
+            placeholder='Artista'
+            name='artist'
+            value={formState.values.artist}
             onChange={handleChange}
           />
 
@@ -112,7 +140,6 @@ const AddMusic = () => {
           {!file && (
             <span onClick={() => document.getElementById('uploadFile').click()}>
               <p>Anexar arquivo</p>
-              <FiFilePlus />
               <input
                 type='file'
                 style={{ display: 'none' }}

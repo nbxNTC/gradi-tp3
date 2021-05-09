@@ -16,11 +16,12 @@ const useStyles = makeStyles(() => ({
 
 interface Props {
   loading: boolean
+  text: string
 }
 
 const Loading = (props: Props) => {
 
-  const { loading } = props
+  const { loading, text } = props
 
   const classes = useStyles()
 
@@ -28,7 +29,7 @@ const Loading = (props: Props) => {
 
   return (
     <div className={classes.container}>
-      <h2 style={{ marginBottom: '2rem' }}>Carregando músicas</h2>
+      <h2 style={{ marginBottom: '2rem' }}>{text}</h2>
       <CircularProgress className={classes.circularProgress} size='3rem' />
     </div>
   )

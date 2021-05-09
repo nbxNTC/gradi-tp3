@@ -11,13 +11,13 @@
   margin: 0 auto;
 }
 
-.add-music > form > h1 {
+.add-music > form > h2 {
   margin-bottom: 1rem;
 }
 
 .add-music > form > span {
   width: fit-content;
-  margin: .6rem auto;
+  margin: 2rem auto 0;
 
   cursor: pointer;
 
@@ -26,8 +26,6 @@
 }
 
 .add-music > form > span > p {
-  margin-right: 1rem;
-
   font-size: 1.2rem;
   font-weight: bold;
 }

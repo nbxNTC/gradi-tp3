@@ -1,4 +1,6 @@
 .home {
+  padding: 2rem 0;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -11,7 +13,7 @@
   margin: 0 auto;
 }
 
-.home > form > h1 {
+.home > form > h2 {
   margin-bottom: 1rem;
 }
 
@@ -26,7 +28,7 @@
 }
 
 .home > form > span > p {
-  margin-right: 1rem;
+  margin-right: .5rem;
 
   font-size: 1.2rem;
   font-weight: bold;
@@ -34,4 +36,10 @@
 
 .home > form > span > svg {
   font-size: 1.2rem;
+}
+
+.home > span {
+  margin-bottom: 2rem;
+
+  cursor: pointer;
 }
